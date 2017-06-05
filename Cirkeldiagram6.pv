@@ -1,0 +1,120 @@
+size(800, 800)
+background(1)
+scale(0.8)
+
+margin = 10
+size = 80
+spacing = 10
+
+max = 2782
+
+import json
+
+with open ("Jsonfile_cirkeldiagrammen.json", "r") as inputFile:
+    babynames = json.load(inputFile)  
+
+for l in babynames:
+    letter = l["letter"]
+
+for (index, letter) in enumerate(babynames):
+    x= index % 6
+    y= index / 6
+    
+    xpos = margin + ((size + spacing) * x)
+    ypos = margin + ((size + spacing) * y)
+    
+    stroke(0.7)
+    arc(xpos, ypos, size / 2)
+    x = 350 # gebaseerd op formule / algoritme
+    y = 400 # idem
+    
+    # values
+    value_m_h = l["male-hispanic"]
+    value_m_a = l["male-asianandpacificislander"]
+    value_m_b = l["male-blacknonhispanic"]
+    value_m_w = l["male-whitenonhispanic"]
+    value_f_h = l["female-hispanic"]
+    value_f_a = l["female-asianandpacificislander"]
+    value_f_b = l["female-blacknonhispanic"]
+    value_f_w = l["female-whitenonhispanic"]
+
+    total_male = value_m_h + value_m_a + value_m_b + value_m_w
+    total_female = value_f_h + value_f_a + value_f_b + value_f_w
+
+    # MALE
+    r = 100 # gebaseerd op de total_male / max * 200
+    r = total_male * 200 / max
+    start = -90
+    
+   
+    # hispanic    
+    stop = start + (value_m_h * 180.0 / total_male)
+    fill("#191970")
+    print(x, y, r, start , stop)
+    arc(x, y, r, range = (start , stop), close = True)
+    start = stop
+    
+    # asian
+    stop = start + (value_m_a * 180.0 / total_male )
+    fill("blue")
+    arc(x, y, r, range = (start , stop), close = True)
+    start = stop
+
+    # black
+    stop = start + (value_m_b  * 180.0 / total_male)
+    fill("red")
+    arc(x, y, r, range = (start , stop), close = True)
+    start = stop
+
+    # asianandpacificislander
+    stop = start + (value_m_w  * 180.0 / total_male)
+    fill("#00a3ff")
+    arc(x, y, r, range = (start , stop), close = True)
+    start = stop
+
+    #FEMALE
+    start = 90
+    r = total_female * 200.0 / max 
+    
+    # hispanic    
+    stop = start + (value_f_h  * 180.0 / total_female)
+    fill("#191970")
+    arc(x, y, r, range = (start, stop), close = True, ccw = True)
+    start = stop
+    
+    # asianandpacificislander
+    stop = start + (value_f_a * 180.0 / total_female )
+    fill("blue")
+    arc(x, y, r, range = (start , stop), close = True, ccw = True)
+    start = stop
+    
+    # blacknonhispanic
+    stop = start + (value_f_b  * 180.0 / total_female)
+    fill("red")
+    arc(x, y, r, range = (start , stop), close = True, ccw = True)
+    start = stop
+    
+     # whitenonhispanic
+    stop = start + (value_f_w  * 180.0 / total_female)
+    fill("#00a3ff")
+    arc(x, y, r, range = (start , stop), close = True, ccw = True)
+    start = stop
+
+
+    # text('A', x, y + 500)  
+ 
+    #     babynames = [
+#       {
+#     "letter": "A",
+#     "male-hispanic": 1929,
+#     "female-hispanic": 1993,
+#     "male-blacknonhispanic": 760,
+#     "female-blacknonhispanic": 838,
+#     "male-whitenonhispanic": 1797,
+#     "female-whitenonhispanic": 1610,
+#     "male-asianandpacificislander": 1055,
+#     "female-asianandpacificislander": 927
+#   }
+# ]
+    
+    
