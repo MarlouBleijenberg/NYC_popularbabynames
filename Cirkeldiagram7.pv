@@ -12,22 +12,17 @@ import json
 with open ("Jsonfile_cirkeldiagrammen.json", "r") as inputFile:
     babynames = json.load(inputFile)  
 
-for l in babynames:
-    key = l["letter"]
-
-for (index, letter) in enumerate(babynames):
+for (index, l) in enumerate(babynames):
     x= index % (4)
     y= index / (4)
     
     xpos = margin + ((size + spacing) * x)
     ypos = margin + ((size + spacing) * y)
     
-    stroke(1.0)
-    arc(xpos, ypos, size / 2)
-    x = 500 # gebaseerd op formule / algoritme
-    y = 480 # idem
+    x = xpos
+    y = ypos
     
-    text(key, x, y + 200) 
+    text(l["letter"], x, y + 200) 
 
     # values
     value_m_h = l["male-hispanic"]
@@ -75,48 +70,34 @@ for (index, letter) in enumerate(babynames):
     arc(x, y, r, range = (start , stop), close = True)
     start = stop
 
-    #FEMALE
-    start = 90
-    r = total_female * 200.0 / max 
-    
-    # hispanic    
-    stop = start + (value_f_h  * 180.0 / total_female)
-    fill("#191970")
-    arc(x, y, r, range = (start, stop), close = True, ccw = True)
-    start = stop
-    
-    # asianandpacificislander
-    stop = start + (value_f_a * 180.0 / total_female )
-    fill("blue")
-    arc(x, y, r, range = (start , stop), close = True, ccw = True)
-    start = stop
-    
-    # blacknonhispanic
-    stop = start + (value_f_b  * 180.0 / total_female)
-    fill("red")
-    arc(x, y, r, range = (start , stop), close = True, ccw = True)
-    start = stop
-    
-     # whitenonhispanic
-    stop = start + (value_f_w  * 180.0 / total_female)
-    fill("#00a3ff")
-    arc(x, y, r, range = (start , stop), close = True, ccw = True)
-    start = stop
+    if total_female > 0:
+        #FEMALE
+        start = 90
+        r = total_female * 200.0 / max 
+        
+        # hispanic    
+        stop = start + (value_f_h  * 180.0 / total_female)
+        fill("#191970")
+        arc(x, y, r, range = (start, stop), close = True, ccw = True)
+        start = stop
+        
+        # asianandpacificislander
+        stop = start + (value_f_a * 180.0 / total_female )
+        fill("blue")
+        arc(x, y, r, range = (start , stop), close = True, ccw = True)
+        start = stop
+        
+        # blacknonhispanic
+        stop = start + (value_f_b  * 180.0 / total_female)
+        fill("red")
+        arc(x, y, r, range = (start , stop), close = True, ccw = True)
+        start = stop
+        
+         # whitenonhispanic
+        stop = start + (value_f_w  * 180.0 / total_female)
+        fill("#00a3ff")
+        arc(x, y, r, range = (start , stop), close = True, ccw = True)
+        start = stop
 
 
-
-    #     babynames = [
-#       {
-#     "letter": "A",
-#     "male-hispanic": 1929,
-#     "female-hispanic": 1993,
-#     "male-blacknonhispanic": 760,
-#     "female-blacknonhispanic": 838,
-#     "male-whitenonhispanic": 1797,
-#     "female-whitenonhispanic": 1610,
-#     "male-asianandpacificislander": 1055,
-#     "female-asianandpacificislander": 927
-#   }
-# ]
-    
     
