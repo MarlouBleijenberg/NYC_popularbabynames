@@ -1,0 +1,103 @@
+size(2000, 3000)
+background(1)
+scale(0.4)
+
+margin = 260
+size = 90
+spacing = 300
+
+
+max = 2782
+
+import json
+with open ("Jsonfile_cirkeldiagrammen.json", "r") as inputFile:
+    babynames = json.load(inputFile)  
+
+for (index, l) in enumerate(babynames):
+    x= index % (4)
+    y= index / (4)
+
+    xpos= margin + ((size + spacing) * x)
+    ypos= margin + ((size + spacing) * y)
+    
+    x= xpos
+    y= ypos
+    
+    color= ("black")
+    text (l["letter"], x, y + 215, size=60, font="Andale Mono", align="center")
+
+    # values
+    value_m_h = l["male-hispanic"]
+    value_m_a = l["male-asianandpacificislander"]
+    value_m_b = l["male-blacknonhispanic"]
+    value_m_w = l["male-whitenonhispanic"]
+    value_f_h = l["female-hispanic"]
+    value_f_a = l["female-asianandpacificislander"]
+    value_f_b = l["female-blacknonhispanic"]
+    value_f_w = l["female-whitenonhispanic"]
+
+    total_male = value_m_h + value_m_a + value_m_b + value_m_w
+    total_female = value_f_h + value_f_a + value_f_b + value_f_w
+
+    # MALE
+    r = 100 # gebaseerd op de total_male / max * 200
+    r = total_male * 200 / max
+    start = -90
+    
+    print (total_male, total_female)
+   
+    # hispanic    
+    stop = start + (value_m_h * 180.0 / total_male)
+    fill("#2a2a2a")
+    print(x, y, r, start , stop)
+    arc(x, y, r, range = (start , stop), close = True)
+    start = stop
+    
+    # asian
+    stop = start + (value_m_a * 180.0 / total_male )
+    fill("#545454")
+    arc(x, y, r, range = (start , stop), close = True)
+    start = stop
+
+    # black
+    stop = start + (value_m_b  * 180.0 / total_male)
+    fill("#939393")
+    arc(x, y, r, range = (start , stop), close = True)
+    start = stop
+
+    # asianandpacificislander
+    stop = start + (value_m_w  * 180.0 / total_male)
+    fill("#d3d3d3")
+    arc(x, y, r, range = (start , stop), close = True)
+    start = stop
+
+    
+    if total_female > 0:
+         #FEMALE
+         start = 90
+         r = total_female * 200.0 / max 
+         
+         # hispanic    
+         stop = start + (value_f_h  * 180.0 / total_female)
+         fill("#2a2a2a")
+         arc(x, y, r, range = (start, stop), close = True, ccw = True)
+         start = stop
+         
+        # asianandpacificislander
+         stop = start + (value_f_a * 180.0 / total_female )
+         fill("#545454")
+         arc(x, y, r, range = (start , stop), close = True, ccw = True)
+         start = stop
+         
+         # blacknonhispanic
+         stop = start + (value_f_b  * 180.0 / total_female)
+         fill("#939393")
+         arc(x, y, r, range = (start , stop), close = True, ccw = True)
+         start = stop
+         
+          # whitenonhispanic
+         stop = start + (value_f_w  * 180.0 / total_female)
+         fill("#d3d3d3")
+         arc(x, y, r, range = (start , stop), close = True, ccw = True)
+         start = stop
+         
